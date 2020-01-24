@@ -1,0 +1,50 @@
+<div *ngIf="dataSource.length">
+<div class="container-fluid">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Name -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Name Quantity -->
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell *matHeaderCellDef> Quantity </th>
+    <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+  </ng-container>
+
+  <!-- Weight Price -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Price </th>
+    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+  </ng-container>
+
+    <!-- Weight Price -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let element" >
+        <a>
+        <mat-icon style="cursor: pointer;"  (click)='onDelete(element.product_id)' color="primary">delete</mat-icon>
+      </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> Edit </th>
+      <td mat-cell *matCellDef="let element" >
+        <a>
+        <mat-icon style="cursor: pointer;"  (click)='onEdit(element.product_id)' color="primary">edit</mat-icon>
+      </a>
+      </td>
+    </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
+</div>
