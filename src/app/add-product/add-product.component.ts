@@ -1,3 +1,4 @@
+import { OrdersService } from './../services/orders.service';
 import { ProductService } from './../services/product.service';
 import { ProductModel } from './../models/productModel';
 import { Component, OnInit } from '@angular/core';
@@ -15,8 +16,9 @@ export class AddProductComponent implements OnInit {
    mode = 'create';
    id: string;
    productModel: ProductModel;
+   button = 'Add Item'
 
-  constructor( private productService: ProductService, private actvateRoute: ActivatedRoute) { }
+  constructor( private productService: ProductService, private orderService: OrdersService, private actvateRoute: ActivatedRoute) { }
 
   ngOnInit() {
   this.productFormGroup = new FormGroup({
@@ -28,20 +30,17 @@ export class AddProductComponent implements OnInit {
        console.log(paramMap);
        if (paramMap.has('id') ) {
          this.mode = 'edit';
+         this.button = 'Update'
          this.id = paramMap.get('id');
-         this.productService.getProduct(this.id).subscribe ( result => {
-             console.log(result.result[0]);
-             this.productModel = result.result[0];
-             this.productFormGroup.setValue ({
-              name: this.productModel.name,
-              quantity: this.productModel.quantity,
-              price: this.productModel.price
-          });
+         const Getdata: ProductModel = this.orderService.getProduct(this.id);
+         this.productFormGroup.setValue ({
+          name: Getdata.name,
+          quantity: Getdata.quantity,
+          price: Getdata.price
+      });
 
-           });
          console.log(this.productModel);
          console.log(this.id);
-
         }
 
      });
@@ -50,10 +49,10 @@ export class AddProductComponent implements OnInit {
   onSubmit(productForm: FormGroupDirective) {
     if (this.productFormGroup.valid) {
       if ( this.mode === 'create') {
-     this.productService.postData(this.productFormGroup);
+     this.orderService.postData(this.productFormGroup);
      console.log('valid');
       } else {
-     this.productService.updateProduct(this.id, this.productFormGroup);
+     this.orderService.updateProduct(this.id, this.productFormGroup);
       }
       this.productFormGroup.reset();
       productForm.resetForm();

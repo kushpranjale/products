@@ -1,5 +1,7 @@
-<div *ngIf="dataSource.length">
+<div >
 <div class="container-fluid">
+  <div class="row">
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!--- Note that these columns can be defined in any order.
@@ -46,5 +48,10 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+</div>
+</div>
+<div class="text-center mt-5">
+  <button mat-raised-button color="primary" (click) = "AddProduct()">Submit</button>
 </div>
 </div>

@@ -1,3 +1,4 @@
+import { OrderModel } from './../models/order';
 import { FormGroup } from '@angular/forms';
 import { ProductModel } from './../models/productModel';
 import { Injectable } from '@angular/core';
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ProductService {
    url = 'http://localhost:3000/products';
+   url2 = 'http://localhost:3000/orders';
    productModel: ProductModel[] = [];
    updatedProduct = new Subject<ProductModel[]>();
   constructor( private http: HttpClient, private routes: Router) { }
@@ -44,6 +46,16 @@ export class ProductService {
       console.log(getproductData);
       this.productModel.push(getproductData);
       this.updatedProduct.next([...this.productModel]);
+    });
+  }
+
+  postOrder(formData:OrderModel[]) {
+     console.log(formData)
+    this.http.post<{status, result }>(`${this.url2}/createOrder`, formData).
+    subscribe(result => {
+
+      console.log(result);
+
     });
   }
 
